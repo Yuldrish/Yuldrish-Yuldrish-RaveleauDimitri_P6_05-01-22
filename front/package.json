@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "angular": "^1.8.2",
+    "node-sass": "^7.0.1",
+    "nodejs": "^0.0.0"
+  },
+  "devDependencies": {
+    "run-script-os": "^1.1.6"
+  }
+}
