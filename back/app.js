@@ -2,19 +2,21 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
+const helmet = require("helmet");
+const sanitize = require("sanitize");
 
 require("dotenv").config();
 
-const sauceRoutes = require("./routes/sauce");
-const userRoutes = require("./routes/user");
+const sauceRoutes = require("./routes/Sauce");
+const userRoutes = require("./routes/User");
 
 mongoose
   .connect(
-    `mongodb+srv://Yuldrish:<Backtopiiquante>@cluster0.ertph.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`, 
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
-  .catch(() => console.log("Connexion à MongoDB échouée !"));
+  .catch((error) => console.log( error));
 
 const app = express();
 
@@ -36,6 +38,8 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/sauces", sauceRoutes);
-app.use("/api/auth", userRoutes);
+app.use("/api/auth",  userRoutes);
+app.use(helmet());
+// app.use(sanitize());
 
 module.exports = app;
