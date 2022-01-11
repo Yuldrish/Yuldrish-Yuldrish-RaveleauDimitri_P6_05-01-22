@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 const helmet = require("helmet");
-const sanitize = require("sanitize");
 
 require("dotenv").config();
 
@@ -40,6 +39,6 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", sauceRoutes);
 app.use("/api/auth",  userRoutes);
 app.use(helmet());
-// app.use(sanitize());
+app.use(require('sanitize').middleware);
 
 module.exports = app;
